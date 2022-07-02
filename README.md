@@ -4,12 +4,13 @@
 Using the above library, one can derive differential equations for any dynamic systems and solve response of the system for a given conditions.
 
 NOTE: complete because the dD/dqi energy losses were added. --  Over.
+      agg Rayleigh scattering.
 
 Functionality of the library has been illustrated by the following examples:
 
 1. Double Pendulum + Rayleigh scattering
 2. Spring Pendulum + Rayleigh scattering
-3. Pendulum with Spring-loaded support
+3. Pendulum with Spring-loaded support + Rayleigh scattering
 4. Double Pendulum with free support
 5. Double Spring Pendulum 
 6. Coupled Pendulum
@@ -53,6 +54,9 @@ V2 = m2*g*(l1*(1-cos(th1)) + l2/2*(1-cos(th2)));
 V = V1 + V2;
 
 L = T - V;
+
+%% Rayleigh scattering --> D
+
 D = 1/2*Dth1^2*fv + 1/2*Dth1^2*fv1;
 %%
 q  = [th1, th2];
@@ -112,6 +116,8 @@ T = 1/2*m*(Dx^2 + (l + x)^2*Dth^2);
 V = -m*g*(l+x)*cos(th) + 1/2*k*x^2;
 
 L = T - V;
+
+%% Rayleigh scattering --> D
 
 D = 1/2*fv*Dth^2;
 
@@ -175,15 +181,20 @@ T   = 1/2*m*Vx2 + 1/2*M*Dx^2;
 V = m*g*l*(1-cos(th)) + 1/2*k*x^2;
 
 L = T - V;
+
+%% Rayleigh scattering --> D
+
+D = 1/2*fv*Dth^2;
+
 %% Derive Equations
 q = [th, x]; Dq = [Dth, Dx];
-Eq = LagrangeDynamicEqDeriver(L, q, Dq);
+Eq = LagrangeDynamicEqDeriver(L, q, Dq D);
 
 %% Solve Equations
 
 tt = linspace(0,10,200);
-[SS, xx] = DynamicEqSolver(Eq, q, Dq, [M m l k g],...
-                           [2, 1, 0.5, 50, 9.81], tt, [45/180*pi,0, 0, 0]);
+[SS, xx] = DynamicEqSolver(Eq, q, Dq, [M m l k g fv],...
+                           [2, 1, 0.5, 50, 9.81, 0], tt, [45/180*pi,0, 0, 0]);
 ```
 
 
@@ -243,11 +254,15 @@ V2 = m2*g*(l1*(1-cos(th1))+l2*(1-cos(th2)));
 V = V1 + V2;
 
 L = T - V;
+%% Rayleigh scattering -->D
+
+D = 0;
+
 %%
 q  = [x, th1, th2];
 Dq = [Dx, Dth1, Dth2];
 tt = linspace(0,25,500);
-Eq = LagrangeDynamicEqDeriver(L, q, Dq);
+Eq = LagrangeDynamicEqDeriver(L, q, Dq, D);
 [SS, xx] = DynamicEqSolver(Eq, q, Dq, [M m1 m2 l1 l2 g],...
                            [0.5, 0.5, 2, 1, 1, 9.81], tt, [0, pi/3, 2*pi/3, 0, 0, 0]);
 ```
@@ -307,11 +322,16 @@ V2 = -m2*g*((l1 + x1)*cos(th1) + (l2 + x2)*cos(th2)) + 1/2*k2*x2^2;
 V = V1 + V2;
 
 L = T - V;
+
+%% Rayleigh scattering --> D
+
+D = 0;
+
 %%
 q  = [x1, x2, th1, th2];
 Dq = [Dx1, Dx2, Dth1, Dth2];
 tt = linspace(0, 15, 500);
-Eq = LagrangeDynamicEqDeriver(L, q, Dq);
+Eq = LagrangeDynamicEqDeriver(L, q, Dq, D);
 [SS, xx] = DynamicEqSolver(Eq, q, Dq, [k1 k2 m1 m2 l1 l2 g],...
                            [20, 100, 1, 2, 1, 1, 9.81], tt, [0, 0, pi/3, 2*pi/3, 0, 0, 0, 0]);
 ```
@@ -380,11 +400,16 @@ V2 = -m2*g*(l2*cos(th2));
 V = V1 + V2;
 
 L = T - V;
+
+%% Rayleigh scattering --> D
+
+D = 0;
+
 %%
 q  = [th1, th2];
 Dq = [Dth1, Dth2];
 tt = linspace(0, 20, 500);
-Eq = LagrangeDynamicEqDeriver(L, q, Dq);
+Eq = LagrangeDynamicEqDeriver(L, q, Dq, D);
 l0n = 2; l1n = 1; l2n = 1.5; l3n = 2;
 [SS, xx] = DynamicEqSolver(Eq, q, Dq, [k m1 m2 l0 l1 l2 l3 g],...
                            [20,1,3, l0n, l1n, l2n, l3n, 9.81], tt, [pi/6, pi/2.5, 0, 0]);
@@ -442,11 +467,16 @@ T = 1/2*M*(VoM*VoM.') + 1/2*m*(Vm*Vm.') + 1/2*J*Wd^2;
 V = M*g*yM + m*g*ym + 1/2*k*x^2;
 
 L = T - V;
+
+%% Rayleigh scattering --> D
+
+D = 0;
+
 %%
 q  = [th0, ths, x];
 Dq = [Dth0, Dths, Dx];
 tt = linspace(0, 20, 500);
-Eq = LagrangeDynamicEqDeriver(L, q, Dq);
+Eq = LagrangeDynamicEqDeriver(L, q, Dq, D);
 R0 = 5; r0 = 1; l0 = 2; 
 [SS, xx] = DynamicEqSolver(Eq, q, Dq, [R r M J m k l g],...
                            [R0, r0, 1, 2, 3, 30, l0, 9.81], tt, [pi/3, pi/2, 0, 0, 0, 0]);
