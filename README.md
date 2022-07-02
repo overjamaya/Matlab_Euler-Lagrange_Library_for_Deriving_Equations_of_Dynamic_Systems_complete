@@ -3,6 +3,8 @@
 
 Using the above library, one can derive differential equations for any dynamic systems and solve response of the system for a given conditions.
 
+NOTE: complete because the dD/dqi energy losses were added. --  Over.
+
 Functionality of the library has been illustrated by the following examples:
 
 1. Double Pendulum
