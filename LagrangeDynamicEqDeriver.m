@@ -1,22 +1,22 @@
-function Eq = LagrangeDynamicEqDeriver(L, q, Dq)
+function Eq = LagrangeDynamicEqDeriver(L, q, Dq,D)
 % Author: Mansour Torabi
 % Email: smtoraabi@ymail.com
 
 %%
-
 syms t
 
 N = length(q);
-
 
 %% Calculation of L_q = r.L/r.q and L_Dq = r.L/r.Dq
 
 L_q = sym(zeros(N,1));
 L_Dq = sym(zeros(N,1));
+D_Dq = sym(zeros(N,1));
 
 for ii = 1:N
    L_q(ii) = diff(L, q(ii));
    L_Dq(ii) = diff(L, Dq(ii));
+   D_Dq(ii) = diff(D, Dq(ii));
 end
 
 %% Calculation of  L_Dq_dt = qd/dt( r_Dq ) 
@@ -51,6 +51,6 @@ end
 Eq = sym(zeros(N,1));
 
 for ii = 1:N
-   Eq(ii) = simplify(L_Dq_dt(ii) - L_q(ii)) ;
+   Eq(ii) = simplify(L_Dq_dt(ii) - L_q(ii) + D_Dq(ii)) ;
 end
 
