@@ -9,18 +9,23 @@ syms M m l k g
 Vx2 = (Dx + l*Dth*cos(th))^2 + (l*Dth*sin(th))^2;
 T   = 1/2*m*Vx2 + 1/2*M*Dx^2;
 
-V = m*g*l*(1-cos(th)) + 1/2*k*x^2;
+V = -m*g*l*(cos(th)) + 1/2*k*x^2;
 
 L = T - V;
+
+%% Rayleigh scattering --> D
+
+D = 1/2*fv*Dth^2;
+
 %% Derive Equations
 q = [th, x]; Dq = [Dth, Dx];
-Eq = LagrangeDynamicEqDeriver(L, q, Dq);
+Eq = LagrangeDynamicEqDeriver(L, q, Dq, D);
 
 %% Solve Equations
 
 tt = linspace(0,10,200);
-[SS, xx] = DynamicEqSolver(Eq, q, Dq, [M m l k g],...
-                           [2, 1, 0.5, 50, 9.81], tt, [45/180*pi,0, 0, 0]);
+[SS, xx] = DynamicEqSolver(Eq, q, Dq, [M m l k g fv],...
+                           [2, 1, 0.5, 50, 9.81, 0], tt, [45/180*pi,0, 0, 0]);
 %% Plot and Animate Responses            
 figure; 
 plot(tt, xx(:,1),'r','linewidth',2); hold on; plot(tt, xx(:,2) + 1,'k', 'linewidth',2);
