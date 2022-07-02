@@ -50,13 +50,14 @@ V2 = m2*g*(l1*(1-cos(th1))+l2*(1-cos(th1+th2))/2);
 V = V1 + V2;
 
 L = T - V;
+D = 1/2*Dth^2*fv + 1/2*Dth^2*fv1;
 %%
 q  = [th1, th2];
 Dq = [Dth1, Dth2];
 tt = linspace(0,5,500);
-Eq = LagrangeDynamicEqDeriver(L, q, Dq);
-[SS, xx] = DynamicEqSolver(Eq, q, Dq, [l1 l2 m1 m2 J1 J2 g],...
-                           [0.5 0.5 1 2 0.2 0.5 9.81], tt, [120,-90,0,0]/180*pi);
+Eq = LagrangeDynamicEqDeriver(L, q, Dq, D);
+[SS, xx] = DynamicEqSolver(Eq, q, Dq, [l1 l2 m1 m2 J1 J2 g fv fv1],...
+                           [0.5 0.5 1 2 0.2 0.5 9.81 0.1 5], tt, [120,-90,0,0]/180*pi);
 ````
 
 
@@ -108,15 +109,18 @@ T = 1/2*m*(Dx^2 + (l + x)^2*Dth^2);
 V = -m*g*(l+x)*cos(th) + 1/2*k*x^2;
 
 L = T - V;
+
+D = 1/2*fv*Dth^2;
+
 %% Derive Equations
 q = [th, x]; Dq = [Dth, Dx];
-Eq = LagrangeDynamicEqDeriver(L, q, Dq);
+Eq = LagrangeDynamicEqDeriver(L, q, Dq, D);
 
 %% Solve Equations
 
 tt = linspace(0,10,300);
-[SS, xx] = DynamicEqSolver(Eq, q, Dq, [m l k g],...
-                           [1 1 10 9.81], tt, [45/180*pi,0.1, 0, 0]);
+[SS, xx] = DynamicEqSolver(Eq, q, Dq, [m l k g fv],...
+                           [1 1 10 9.81 0.7], tt, [45/180*pi,0.1, 0, 0]);
 ```
 
 <table style="width:100%">
