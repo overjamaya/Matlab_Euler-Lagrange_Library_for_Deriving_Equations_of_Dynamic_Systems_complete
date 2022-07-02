@@ -17,17 +17,21 @@ T2 =  1/2*J2*(Dth2)^2 + 1/2*m2*Vc2^2;
 
 T = T1 + T2;
 
-V1 = m1*g*l1/2 * (1-cos(th1));
-V2 = m2*g*(l1*(1-cos(th1)) + l2/2*(1-cos(th2)));
+V1 = -m1*g*l1/2*(cos(th1));
+V2 = -m2*g*(l1*(cos(th1) + l2/2*cos(th2));
 V = V1 + V2;
 
 L = T - V;
-D = 1/2*Dth1^2*fv + 1/2*Dth1^2*fv1;
+
+%% Rayleigh scattering --> D
+
+D = 1/2*Dth1^2*fv + 1/2*Dth2^2*fv1;
+
 %%
 q  = [th1, th2];
 Dq = [Dth1, Dth2];
 tt = linspace(0,5,500);
-Eq = LagrangeDynamicEqDeriver(L, q, Dq,D);
+Eq = LagrangeDynamicEqDeriver(L, q, Dq, D);
 [SS, xx] = DynamicEqSolver(Eq, q, Dq, [l1 l2 m1 m2 J1 J2 g fv fv1],...
                            [0.5, 0.5, 1, 5, 0.2, 0.5, 9.81, 0, 0], tt, [120,30,0,0]/180*pi);
 %%             
