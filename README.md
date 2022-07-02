@@ -35,7 +35,7 @@ Just run the ```EVAL1.m``` to **derive equations** and solve intial condition pr
 ### Code Usage:
 ``` Matlab
 syms th1 th2  Dth1 Dth2 
-syms l1 l2 m1 m2 J1 J2  g t 
+syms l1 l2 m1 m2 J1 J2  g t fv fv1
 
 %% Kinetic and Potential Energy
 T1 = 1/2*J1*Dth1^2 +1/2*m1*(l1/2*Dth1)^2;
