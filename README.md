@@ -7,8 +7,8 @@ NOTE: complete because the dD/dqi energy losses were added. --  Over.
 
 Functionality of the library has been illustrated by the following examples:
 
-1. Double Pendulum
-2. Spring Pendulum
+1. Double Pendulum + Rayleigh scattering
+2. Spring Pendulum + Rayleigh scattering
 3. Pendulum with Spring-loaded support
 4. Double Pendulum with free support
 5. Double Spring Pendulum 
