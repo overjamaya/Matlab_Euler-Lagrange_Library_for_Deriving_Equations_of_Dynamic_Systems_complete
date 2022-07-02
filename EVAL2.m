@@ -3,22 +3,25 @@
 %%
 
 syms th Dth x Dx
-syms m l k g t 
+syms m l k g t fv
 
 %% Kinetic and Potential Energy
 T = 1/2*m*(Dx^2 + (l + x)^2*Dth^2);
 V = -m*g*(l+x)*cos(th) + 1/2*k*x^2;
 
 L = T - V;
+%% Rayleigh scattering
+D = 1/2*fv*Dth^2;
+
 %% Derive Equations
 q = [th, x]; Dq = [Dth, Dx];
-Eq = LagrangeDynamicEqDeriver(L, q, Dq);
+Eq = LagrangeDynamicEqDeriver(L, q, Dq, D);
 
 %% Solve Equations
 
 tt = linspace(0,10,300);
-[SS, xx] = DynamicEqSolver(Eq, q, Dq, [m l k g],...
-                           [1 1 10 9.81], tt, [45/180*pi,0.1, 0, 0]);
+[SS, xx] = DynamicEqSolver(Eq, q, Dq, [m l k g fv],...
+                           [1 1 10 9.81 0], tt, [45/180*pi,0.1, 0, 0]);
 %% Plot and Animate Responses            
 figure; 
 plot(tt, xx(:,1),'r','linewidth',2); hold on; plot(tt, xx(:,2) + 1,'k', 'linewidth',2);
