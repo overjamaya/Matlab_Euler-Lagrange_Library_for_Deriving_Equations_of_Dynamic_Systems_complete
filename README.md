@@ -123,7 +123,7 @@ Eq = LagrangeDynamicEqDeriver(L, q, Dq, D);
 
 tt = linspace(0,10,300);
 [SS, xx] = DynamicEqSolver(Eq, q, Dq, [m l k g fv],...
-                           [1 1 10 9.81 0.7], tt, [45/180*pi,0.1, 0, 0]);
+                           [1 1 10 9.81 0], tt, [45/180*pi,0.1, 0, 0]);
 ```
 
 <table style="width:100%">
